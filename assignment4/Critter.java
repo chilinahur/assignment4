@@ -144,6 +144,24 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
+		
+		try{
+			//Critter newCritter = (Critter) Class.forName(myPackage + "." + critter_class_name).newInstance();
+			Critter newCritter = (Critter) Class.forName(myPackage + "." + critter_class_name).newInstance();
+			
+			for (Critter critter: population) {
+				if (newCritter.getClass().isInstance(critter)) {
+					result.add(critter);
+				}
+			}
+			
+		}
+		
+		catch (Exception e){
+			
+			throw new InvalidCritterException(critter_class_name);
+
+		}
 	
 		return result;
 	}
@@ -235,21 +253,46 @@ public abstract class Critter {
 	
 	public static void displayWorld() {
 		String[] topBorder = new String[Params.world_width];
-		String[] botBorder = new String[Params.world_width];
 		
 		topBorder[0] = "+";
-		botBorder[0] = "+";
 		topBorder[Params.world_width - 1] = "+";
-		botBorder[Params.world_width - 1] = "+";
 		
 		for(int i = 1; i < Params.world_width - 1; i++){
 			topBorder[i] = "-";
-			botBorder[i] = "-";
 		}
 		
-		System.out.println(Arrays.toString(topBorder));
-		System.out.println(Arrays.toString(botBorder));
+		//System.out.println(Arrays.toString(topBorder));
+		//System.out.println(Arrays.toString(botBorder));
 				
-		Critter[][] world = new Critter[Params.world_height][Params.world_width];
+		String[][] world = new String[Params.world_height][Params.world_width];
+		
+		for(int i = 0; i < Params.world_height; i++){
+			for(int j = 0; j < Params.world_width; j++){
+				world[i][j] = " ";
+			}
+		}
+		
+		for(Critter critter : population){
+			world[critter.y_coord][critter.x_coord] = critter.toString();
+		}
+		
+		System.out.println();
+		for(int j = 0; j < Params.world_width; j++){
+			System.out.print("-");
+		}
+		System.out.println();
+		
+		for(int i = 0; i < Params.world_height; i++){
+			
+			System.out.print("|");
+			for(int j = 0; j < Params.world_width; j++){
+				System.out.print(world[i][j]);
+			}
+			System.out.println("|");
+		}
+		
+		for(int j = 0; j < Params.world_width; j++){
+			System.out.print("-");
+		}
 	}
 }
