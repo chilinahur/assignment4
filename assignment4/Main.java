@@ -11,6 +11,8 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 
@@ -68,9 +70,114 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-        
-        
-        System.out.println("GLHF");
+    	
+while(true){
+        	String input = kb.nextLine();
+    		Scanner commandScanner = new Scanner(input);
+    		String command = commandScanner.next();
+    		
+        try{
+        	if(command.equals("quit")){
+        		if(commandScanner.hasNext())
+        			throw new Exception();
+        		break;
+        	}
+        	
+        	else if(command.equals("show")){
+        		if(commandScanner.hasNext())
+        			throw new Exception();
+        		Critter.displayWorld();
+        	}
+        	
+        	else if(command.equals("step")){
+        		
+        		if(commandScanner.hasNextInt()){
+            		int num = commandScanner.nextInt();
+            		
+            		if(commandScanner.hasNext() || num < 0)
+            			throw new Exception();
+
+            		for(int i = 0; i < num; i++){
+            			Critter.worldTimeStep();
+            		}
+        		}
+        		else
+       			Critter.worldTimeStep();
+        	}
+        	
+        	else if(command.equals("seed")){
+        		if(commandScanner.hasNextInt()){
+            		int num = commandScanner.nextInt();
+            		
+            		if(commandScanner.hasNext() || num < 0)
+            			throw new Exception();
+
+            		Critter.setSeed(num);
+        		}
+        		else
+        			throw new Exception();
+        	}
+        	
+        	else if(command.equals("make")){
+        		String className = new String();
+        		int num = 0;
+        		
+        		if(commandScanner.hasNext())
+        			className = commandScanner.next();
+        		else
+            		throw new Exception();
+        		
+           		if(commandScanner.hasNextInt()){
+            		num = commandScanner.nextInt();
+            		
+            		if(commandScanner.hasNext() || num < 0)
+            			throw new Exception();
+           		}
+           		else if(commandScanner.hasNext())
+        			throw new Exception();
+           		
+        		Critter.clearWorld();
+        		///*
+        		for(int i = 0; i< 100; i++)
+        			Critter.makeCritter("Algae");
+        		for(int x = 0; x < 25; x++)
+        			Critter.makeCritter("Craig");
+        		//*/
+        		if(num == 0)
+        			Critter.makeCritter(className.toString());
+        		else{
+        			for(int i = 0; i < num; i++)
+            			Critter.makeCritter(className.toString());
+        		}
+        	}
+        	else if(command.equals("stats")){
+        		
+        		if(commandScanner.hasNext()){
+        			
+            		String className = commandScanner.next();
+            		
+            		if(commandScanner.hasNext())
+            			throw new Exception();
+            		
+            		List<Critter> result = new ArrayList<Critter>();
+            		result = Critter.getInstances(className);
+            		
+            		Critter.runStats(result);
+            		
+        		}
+        		else
+        			throw new Exception();
+        		
+        	}
+    		else{
+                System.out.println("invalid command: " + input);
+    		}
+    	}
+            catch (Exception e){
+            	System.out.println("error processing: " + input);
+            }
+		} 
+
         
         /* Write your code above */
         System.out.flush();
