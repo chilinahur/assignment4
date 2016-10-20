@@ -369,17 +369,13 @@ public abstract class Critter {
 				}
 			}
 		}
-		
 		population.addAll(babies);
-		
 		for(Critter critter : population){
 			if(critter.moved == true){
 				critter.moved = false;
-				critter.energy -= Params.rest_energy_cost;
 			}
-			else if(!babies.contains(critter)){
-				critter.energy -= Params.rest_energy_cost;
-			}
+			if(!babies.contains(critter))
+			critter.energy -= Params.rest_energy_cost;
 		}
 		
 		for(int i = 0; i < Params.refresh_algae_count; i++){
@@ -397,7 +393,7 @@ public abstract class Critter {
 		        it.remove();
 		    }
 		}
-		
+
 		babies.clear();
 		
 	}
