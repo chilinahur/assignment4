@@ -29,7 +29,6 @@ public class Hannibal extends Critter{
 			reproduce(hannibal4, 6);
 			
 			res = true;
-			//walk(6);
 		}
 		
 	}
