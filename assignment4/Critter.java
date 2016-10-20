@@ -23,9 +23,9 @@ import java.util.List;
 
 
 public abstract class Critter {
-	private boolean moved = false;
-	private static boolean running = false;
-	private static boolean fighter = false;
+	private boolean moved = false;	//moved or not
+	private static boolean running = false;	//coming from run method or not
+	private static boolean fighter = false;	//coming from doEncounters method or not
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
@@ -54,6 +54,11 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	
+	
+	/**
+	 * This method moves the critter in the specified direction one spot
+	 * @param direction = specified direction
+	 */
 	protected final void walk(int direction) {
 		if(!running){
 			energy -= Params.walk_energy_cost;
@@ -146,6 +151,10 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * This method moves the critter in the specified direction two spots
+	 * @param direction = specified direction
+	 */
 	protected final void run(int direction) {
 		running = true;
 		boolean on = false;
@@ -183,9 +192,21 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * This method reproduces the critter in the specified direction adjacent to the parent
+	 * with the energy split in half between the parent and child
+	 * @param direction = specified direction
+	 * @param offspring = specified offspring
+	 */
 	protected final void reproduce(Critter offspring, int direction) {
 		if(this.energy < Params.min_reproduce_energy)
 			return;
+		
+		boolean on = false;
+		if(fighter == true){	//accounts for second walk
+			fighter = false;
+			on = true;
+		}
 		
 		offspring.energy = this.energy/2;
 		
@@ -199,6 +220,9 @@ public abstract class Critter {
 		
 		offspring.walk(direction);
 		offspring.energy+=Params.walk_energy_cost;
+		
+		if(on == true)
+			fighter = true;
 		
 		babies.add(offspring);
 		
