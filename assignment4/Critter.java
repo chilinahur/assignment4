@@ -1,12 +1,11 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Sriram Chilukuri
+ * smc4474
+ * 16445
+ * Yousef Abdelrazzaq
+ * Yja87
+ * 16445
  * Slip days used: <0>
  * Fall 2016
  */
@@ -227,7 +226,7 @@ public abstract class Critter {
 		babies.add(offspring);
 		
 	}
-
+	
 	public abstract void doTimeStep();
 	public abstract boolean fight(String opponent);
 	
@@ -238,8 +237,8 @@ public abstract class Critter {
 	 * (Java weirdness: Exception throwing does not work properly if the parameter has lower-case instead of
 	 * upper. For example, if craig is supplied instead of Craig, an error is thrown instead of
 	 * an Exception.)
-	 * @param critter_class_name
-	 * @throws InvalidCritterException
+	 * @param critter_class_name = empty string
+	 * @throws InvalidCritterException = throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		
@@ -266,9 +265,9 @@ public abstract class Critter {
 	
 	/**
 	 * Gets a list of critters of a specific type.
-	 * @param critter_class_name What kind of Critter is to be listed.  Unqualified class name.
-	 * @return List of Critters.
-	 * @throws InvalidCritterException
+	 * @param critter_class_name = What kind of Critter is to be listed.  Unqualified class name.
+	 * @return List of Critters
+	 * @throws InvalidCritterException = throws InvalidCritterException
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
@@ -380,6 +379,14 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * Time step all critters in population.
+	 * Do encounters for all critters in same spot.
+	 * Subtract rest energy for all the critters.
+	 * Add algae.
+	 * Remove dead critters.
+	 * Move babies to population.
+	 */
 	public static void worldTimeStep() {
 		
 		for(Critter critter: population){
@@ -422,6 +429,9 @@ public abstract class Critter {
 		
 	}
 	
+	/**
+	 * Displays the critters on the board
+	 */
 	public static void displayWorld() {		
 		String[] topBorder = new String[Params.world_width];
 		
@@ -432,9 +442,6 @@ public abstract class Critter {
 			topBorder[i] = "-";
 		}
 		
-		//System.out.println(Arrays.toString(topBorder));
-		//System.out.println(Arrays.toString(botBorder));
-				
 		String[][] world = new String[Params.world_height][Params.world_width];
 		
 		for(int i = 0; i < Params.world_height; i++){
@@ -471,6 +478,11 @@ public abstract class Critter {
 		
 	}
 	
+	/**
+	 * Run fights for critters when in same spot
+	 * @param A = first critter to be checked
+	 * @param B = second critter to be checked
+	 */
 	private static void doEncounters(Critter A, Critter B){
 		int rollA = 0;
 		int rollB = 0;
